@@ -1,0 +1,94 @@
+<div class="dashboard-page">
+
+  <section class="hero">
+
+    <div>
+      <span class="eyebrow">FRAUD INTELLIGENCE</span>
+
+      <h1>Fraud Intelligence Dashboard</h1>
+
+      <p>
+        Investigate customers, relationships and suspicious
+        transaction patterns.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="search-button"
+      (click)="openSearch()">
+      Find Customer
+    </button>
+
+  </section>
+
+
+  @if (loading) {
+
+    <div class="loading">
+      Loading dashboard...
+    </div>
+
+  } @else if (error) {
+
+    <div class="error">
+      {{ error }}
+    </div>
+
+  } @else {
+
+    <section class="stats-grid">
+
+      <div class="stat-card">
+        <span>Customers</span>
+        <strong>{{ dashboard?.customers ?? 0 }}</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Accounts</span>
+        <strong>{{ dashboard?.accounts ?? 0 }}</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Devices</span>
+        <strong>{{ dashboard?.devices ?? 0 }}</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>IP Addresses</span>
+        <strong>{{ dashboard?.ipAddresses ?? 0 }}</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Transfers</span>
+        <strong>{{ dashboard?.transfers ?? 0 }}</strong>
+      </div>
+
+    </section>
+
+
+    <section class="quick-action">
+
+      <div>
+        <span class="eyebrow">INVESTIGATION</span>
+
+        <h2>Start a fraud investigation</h2>
+
+        <p>
+          Search for a customer and investigate their
+          accounts, devices, IP addresses and transaction
+          relationships.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        (click)="openSearch()">
+        Search Customers →
+      </button>
+
+    </section>
+
+  }
+
+</div>

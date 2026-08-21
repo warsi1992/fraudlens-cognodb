@@ -1,0 +1,38 @@
+<header class="topbar">
+
+  <a routerLink="/dashboard" class="brand">
+
+    <div class="brand-icon">F</div>
+
+    <div>
+      <div class="brand-name">FraudLens</div>
+      <div class="brand-subtitle">Fraud Investigation Platform</div>
+    </div>
+
+  </a>
+
+  <nav>
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Dashboard
+    </a>
+
+    <a
+      routerLink="/search"
+      routerLinkActive="active">
+      Investigate
+    </a>
+  </nav>
+
+  <div class="status">
+    <span></span>
+    System Online
+  </div>
+
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

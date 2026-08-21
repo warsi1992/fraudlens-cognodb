@@ -1,0 +1,240 @@
+<div class="investigation-page">
+
+  @if (loading) {
+
+    <div class="loading">
+      Loading customer investigation...
+    </div>
+
+  } @else if (error) {
+
+    <div class="error">
+      {{ error }}
+    </div>
+
+  } @else if (customer) {
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="backToSearch()">
+      ← Back to Customer Search
+    </button>
+
+    <section class="customer-header">
+
+      <div>
+        <span class="eyebrow">CUSTOMER INVESTIGATION</span>
+
+        <h1>{{ customer.name }}</h1>
+
+        <p>{{ customer.email }}</p>
+      </div>
+
+      @if (fraudScore) {
+
+        <div
+          class="score"
+          [class.high]="fraudScore.score >= 70"
+          [class.medium]="fraudScore.score >= 40 && fraudScore.score < 70"
+          [class.low]="fraudScore.score < 40">
+
+          <span>Fraud Score</span>
+
+          <strong>{{ fraudScore.score }}</strong>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <div class="details-grid">
+
+      <!-- Customer Profile -->
+
+      <section class="panel">
+
+        <h2>Customer Profile</h2>
+
+        <div class="detail-row">
+          <span>Customer ID</span>
+          <strong>{{ customer.customerId }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>City</span>
+          <strong>{{ customer.city }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Accounts</span>
+          <strong>{{ customer.accounts.join(', ') }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Devices</span>
+          <strong>{{ customer.devices.join(', ') }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>IP Addresses</span>
+          <strong>{{ customer.ipAddresses.join(', ') }}</strong>
+        </div>
+
+      </section>
+
+
+      <!-- Fraud Indicators -->
+
+      <section class="panel">
+
+        <h2>Fraud Indicators</h2>
+
+        @if (fraudScore?.reasons?.length) {
+
+          @for (reason of fraudScore!.reasons; track reason) {
+
+            <div class="indicator">
+
+              <span class="warning">!</span>
+
+              <span>{{ reason }}</span>
+
+            </div>
+
+          }
+
+        } @else {
+
+          <p class="muted">
+            No fraud indicators found.
+          </p>
+
+        }
+
+      </section>
+
+    </div>
+
+
+    <!-- Shared Relationships -->
+
+    <div class="fraud-grid">
+
+      <!-- Shared Devices -->
+
+      <section class="panel">
+
+        <h2>Shared Devices</h2>
+
+        @for (
+          item of sharedDevices;
+          track item.deviceName + item.sharedWith
+        ) {
+
+          <div class="relationship">
+
+            <div class="node">
+              {{ item.deviceName }}
+            </div>
+
+            <span>shared with</span>
+
+            <div class="node suspicious">
+              {{ item.sharedWith }}
+            </div>
+
+          </div>
+
+        } @empty {
+
+          <p class="muted">
+            No shared devices detected.
+          </p>
+
+        }
+
+      </section>
+
+
+      <!-- Shared IPs -->
+
+      <section class="panel">
+
+        <h2>Shared IP Addresses</h2>
+
+        @for (
+          item of sharedIps;
+          track item.ipAddress + item.sharedWith
+        ) {
+
+          <div class="relationship">
+
+            <div class="node">
+              {{ item.ipAddress }}
+            </div>
+
+            <span>shared with</span>
+
+            <div class="node suspicious">
+              {{ item.sharedWith }}
+            </div>
+
+          </div>
+
+        } @empty {
+
+          <p class="muted">
+            No shared IP addresses detected.
+          </p>
+
+        }
+
+      </section>
+
+    </div>
+
+
+    <!-- Transfer Chain -->
+
+    <section class="panel transfer-panel">
+
+      <h2>Transfer Chain</h2>
+
+      @if (transferChain?.path?.length) {
+
+        <div class="chain">
+
+          @for (
+            account of transferChain!.path;
+            track account;
+            let last = $last
+          ) {
+
+            <div class="account-node">
+              {{ account }}
+            </div>
+
+            @if (!last) {
+              <div class="arrow">→</div>
+            }
+
+          }
+
+        </div>
+
+      } @else {
+
+        <p class="muted">
+          No transfer chain found.
+        </p>
+
+      }
+
+    </section>
+
+  }
+
+</div>

@@ -1,0 +1,90 @@
+<div class="search-page">
+
+  <section class="search-hero">
+
+    <span class="eyebrow">CUSTOMER SEARCH</span>
+
+    <h1>Find a Customer</h1>
+
+    <p>
+      Search customers to begin a fraud investigation.
+    </p>
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        placeholder="Search by customer name..."
+        (keyup.enter)="search()">
+
+      <button
+        type="button"
+        (click)="search()"
+        [disabled]="loading">
+
+        {{ loading ? 'Searching...' : 'Search' }}
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  @if (error) {
+
+    <div class="message error">
+      {{ error }}
+    </div>
+
+  }
+
+
+  @if (loading) {
+
+    <div class="message">
+      Searching customers...
+    </div>
+
+  }
+
+
+  @if (!loading && searched && customers.length === 0 && !error) {
+
+    <div class="message">
+      No customers found.
+    </div>
+
+  }
+
+
+  @if (customers.length > 0) {
+
+    <section class="results">
+
+      <h2>Customers</h2>
+
+      @for (customer of customers; track customer.customerId) {
+
+        <button
+          type="button"
+          class="customer-card"
+          (click)="selectCustomer(customer)">
+
+          <div>
+            <strong>{{ customer.name }}</strong>
+            <span>{{ customer.email }}</span>
+          </div>
+
+          <span class="arrow">→</span>
+
+        </button>
+
+      }
+
+    </section>
+
+  }
+
+</div>
