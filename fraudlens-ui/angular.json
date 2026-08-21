@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/fraudlens-ui",
+            "outputPath": "dist/fraudlens-ui/browser",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
