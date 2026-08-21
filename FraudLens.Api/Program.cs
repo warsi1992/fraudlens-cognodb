@@ -7,6 +7,16 @@ using Neo4j.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.Sources.Clear();
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .AddJsonFile(
+        $"appsettings.{builder.Environment.EnvironmentName}.json",
+        optional: true,
+        reloadOnChange: false)
+    .AddEnvironmentVariables();
+
 // Add services to the container.
 builder.Services.Configure<Neo4jSettings>(
     builder.Configuration.GetSection("Neo4j"));
@@ -23,7 +33,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Angular", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200")
+            .WithOrigins("https://fraudlensc.netlify.app")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
