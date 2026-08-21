@@ -1,0 +1,9 @@
+[build]
+  base = "fraudlens-ui"
+  command = "npm run build"
+  publish = "dist/fraudlens-ui/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
